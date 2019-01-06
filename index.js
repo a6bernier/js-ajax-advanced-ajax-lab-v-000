@@ -5,25 +5,15 @@ function getRepositories() {
   req.send();
 }
 
-<script id="repository-template" type="text/x-handlebars-template">
-  <ul>
-   {{#each this}}
-     <li>
-       <h2><a href="{{html_url}}">{{name}}</a></h2>
-       {{> authorPartial owner }}
-       <p>Watchers: {{watchers_count}}</p>
-       <p>Forks: {{forks_count}}</p>
-       <p>Issues: {{open_issues_count}}</p>
-     </li>
-    {{/each}}
-  </ul>
-</script>
-<script id="author-partial-template" type="text/x-handlebars-template">
-  <section>
-    <header><h4>Created By {{login}}</h4></header>
-    <img src="{{avatar_url}}" height="32" width="32">
-  </section>
-</script>
+function showRepositories(event, data) {
+  const repos = JSON.parse(this.responseText);
+  const src = document.getElementById('repository-template').innerHTML;
+  const template = Handlebars.compile(src);
+  const repoList = template(repos);
+  document.getElementById('repositories').innerHTML = repoList;
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function(event) {
   Handlebars.registerPartial(
