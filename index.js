@@ -24,3 +24,10 @@ function getRepositories() {
     <img src="{{avatar_url}}" height="32" width="32">
   </section>
 </script>
+
+document.addEventListener('DOMContentLoaded', function(event) {
+  Handlebars.registerPartial(
+    'authorPartial',
+    document.getElementById('author-partial-template').innerHTML
+  );
+});
