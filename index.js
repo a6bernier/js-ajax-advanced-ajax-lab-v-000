@@ -5,21 +5,19 @@ function getRepositories() {
   req.send();
 }
 
-function showRepositories(event, data) {
-  const repos = JSON.parse(this.responseText);
-  const repoList =
-    '<ul>' +
-    repos
-      .map(r => {
-        return `
-          <li>
-            <h2><a href="${r.html_url}">${r.name}</a></h2>
-            <p>Watchers: ${r.watchers_count}</p>
-            <p>Forks: ${r.forks_count}</p>
-            <p>Issues: ${r.open_issues_count}</p>
-          </li>`;
-      })
-      .join('') +
-    '</ul>';
-  document.getElementById('repositories').innerHTML = repoList;
-}
+<script id="repository-template" type="text/x-handlebars-template">
+  <ul>
+   {{#each this}}
+     <li>
+       <h2><a href="{{html_url}}">{{name}}</a></h2>
+       <section>
+          <header><h4>Created By {{owner.login}}</h4></header>
+          <img src="{{owner.avatar_url}}" height="32" width="32">
+       </section>
+       <p>Watchers: {{watchers_count}}</p>
+       <p>Forks: {{forks_count}}</p>
+       <p>Issues: {{open_issues_count}}</p>
+     </li>
+    {{/each}}
+  </ul>
+</script>
